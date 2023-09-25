@@ -25,12 +25,16 @@ OBJS = astrolog.o atlas.o calc.o charts0.o charts1.o charts2.o charts3.o\
 
 # If you don't have X windows, delete the "-lX11" part from the line below:
 # If not compiling with GNUC, delete the "-ldl" part from the line below:
-LIBS = -lm -lX11 -ldl -s
-CPPFLAGS = -O -Wno-write-strings -Wno-narrowing -Wno-comment
+LIBS = -lm -lX11 -L/usr/X11/lib
+CPPFLAGS = -O -Wno-write-strings -Wno-parentheses -Wno-unsequenced -Wno-constant-conversion -Wno-format
+INC = -I/usr/X11/include
 RM = rm -f
 
+%.o: %.cpp
+	gcc -c $(INC) $(CPPFLAGS) $?
+
 $(NAME): $(OBJS)
-	cc -o $(NAME) $(OBJS) $(LIBS)
+	gcc -o $(NAME) $(OBJS) $(LIBS)
 
 clean:
 	$(RM) $(OBJS) $(NAME)
